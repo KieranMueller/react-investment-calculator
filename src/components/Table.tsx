@@ -1,7 +1,6 @@
 import Row from './Row';
 
 export default function Table({ resultsData, initialInvestment }: any) {
-  console.log(resultsData);
   let totalInterest = 0;
   let investedCapital = initialInvestment;
 

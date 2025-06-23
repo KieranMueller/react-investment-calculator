@@ -1,26 +1,12 @@
-export default function Calculator({updateInvestmentData}: any) {
+export default function Calculator({ updateInvestmentData, calcFields }: any) {
   return (
     <div className="calc">
-      <div className="row">
+      {calcFields.map(({ label, name }: {label: string, name: string}) => (
         <div className="box">
-          <label htmlFor="initialInvestment">Initial Investment</label>
-          <input id="initialInvestment" type="number" onChange={updateInvestmentData} />
+          <label htmlFor={label}>{name}</label>
+          <input id={label} type="number" onChange={updateInvestmentData} />
         </div>
-        <div className="box">
-          <label htmlFor="annualInvestment">Annual Investment</label>
-          <input id="annualInvestment" type="number" onChange={updateInvestmentData}/>
-        </div>
-      </div>
-      <div className="row">
-        <div className="box">
-          <label htmlFor="expectedReturn">Expected Return</label>
-          <input id="expectedReturn" type="number" onChange={updateInvestmentData}/>
-        </div>
-        <div className="box">
-          <label htmlFor="duration">Duration</label>
-          <input id="duration" type="number" onChange={updateInvestmentData}/>
-        </div>
-      </div>
+      ))}
     </div>
   );
 }

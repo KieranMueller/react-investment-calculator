@@ -1,4 +1,4 @@
-import calcIcon from '../../public/calc.svg'
+import calcIcon from '../assets/calc.svg'
 
 export default function Header() {
     return (

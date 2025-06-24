@@ -9,6 +9,7 @@ import Header from './components/Header';
 function App() {
   const [investmentData, setInvestmentData] = useState<InvestmentData>();
   const [resultsData, setResultsData] = useState<any>([]);
+  const [isValidInput, setIsValidInput] = useState<boolean>(true);
   const calcFields = [
     {
       name: 'Initial Investment',
@@ -29,10 +30,19 @@ function App() {
   ];
 
   function updateInvestmentData(event: React.ChangeEvent<HTMLInputElement>) {
+    setIsValidInput(true);
+    const inputId = event.target.id;
+    const value: number = event.target.valueAsNumber;
+
     const newInvestmentData: any = {
       ...investmentData,
-      [event.target.id as keyof InvestmentData]: event.target.valueAsNumber,
+      [inputId as keyof InvestmentData]: value,
     };
+
+    if (inputId === 'duration' && value < 0) {
+      setIsValidInput(false);
+      return;
+    }
 
     setInvestmentData(newInvestmentData);
     setResultsData(calculateInvestmentResults(newInvestmentData));
@@ -41,11 +51,16 @@ function App() {
   return (
     <div className="container">
       <Header />
-      <Calculator updateInvestmentData={updateInvestmentData} calcFields={calcFields} />
-      <Table
-        resultsData={resultsData}
-        initialInvestment={investmentData?.initialInvestment}
+      <Calculator
+        updateInvestmentData={updateInvestmentData}
+        calcFields={calcFields}
       />
+      {isValidInput ?
+        <Table
+          resultsData={resultsData}
+          initialInvestment={investmentData?.initialInvestment}
+        /> : <p>Please enter valid duration</p>
+      }
     </div>
   );
 }
